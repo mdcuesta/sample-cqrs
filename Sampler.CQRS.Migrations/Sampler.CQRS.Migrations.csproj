@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Class1.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sampler.CQRS.Core\Sampler.CQRS.Core.csproj" />
+    <ProjectReference Include="..\Sampler.CQRS.Source\Sampler.CQRS.Source.csproj" />
+    <ProjectReference Include="..\Sampler.CQRS.Source\Sampler.CQRS.Source.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Sampler.CQRS.Migrations.Test\obj\Debug\netcoreapp2.1\Sampler.CQRS.Migrations.Test.assets.cache" />
+  </ItemGroup>
+</Project>

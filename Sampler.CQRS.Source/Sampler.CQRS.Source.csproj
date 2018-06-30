@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Class1.cs" />
+    <Compile Remove="Sampler.CQRS.Source.Test\UnitTest1.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sampler.CQRS.Core\Sampler.CQRS.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Commands\" />
+    <Folder Include="Queries\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Sampler.CQRS.Source.Tests\obj\Debug\netcoreapp2.1\Sampler.CQRS.Source.Tests.assets.cache" />
+    <None Remove="Sampler.CQRS.Source.Test\obj\Debug\netcoreapp2.1\Sampler.CQRS.Source.Test.assets.cache" />
+    <None Remove="Sampler.CQRS.Source.Test\obj\Sampler.CQRS.Source.Test.csproj.nuget.g.props" />
+    <None Remove="Sampler.CQRS.Source.Test\obj\Sampler.CQRS.Source.Test.csproj.nuget.g.targets" />
+    <None Remove="Sampler.CQRS.Source.Test\obj\project.assets.json" />
+    <None Remove="Sampler.CQRS.Source.Test\obj\Sampler.CQRS.Source.Test.csproj.nuget.cache" />
+  </ItemGroup>
+</Project>

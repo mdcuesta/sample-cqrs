@@ -5,7 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\" />
+    <Compile Remove="wwwroot\**" />
+    <Content Remove="wwwroot\**" />
+    <EmbeddedResource Remove="wwwroot\**" />
+    <None Remove="wwwroot\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -15,10 +18,31 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sampler.CQRS.Core\Sampler.CQRS.Core.csproj" />
-    <ProjectReference Include="..\Sampler.CQRS.Data\Sampler.CQRS.Data.csproj" />
-    <ProjectReference Include="..\Sampler.CQRS.Migrations\Sampler.CQRS.Migrations.csproj" />
-    <ProjectReference Include="..\Sampler.CQRS.Source\Sampler.CQRS.Source.csproj" />
+    <ProjectReference Include="..\Sampler.CQRS.Caching\Sampler.CQRS.Caching.csproj">
+      <Private>true</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Sampler.CQRS.Core\Sampler.CQRS.Core.csproj">
+      <Private>true</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Sampler.CQRS.Data\Sampler.CQRS.Data.csproj">
+      <Private>true</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Sampler.CQRS.Messaging\Sampler.CQRS.Messaging.csproj">
+      <Private>true</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Sampler.CQRS.Migrations\Sampler.CQRS.Migrations.csproj">
+      <Private>true</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Sampler.CQRS.Service\Sampler.CQRS.Service.csproj">
+      <Private>true</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Sampler.CQRS.Source\Sampler.CQRS.Source.csproj">
+      <Private>true</Private>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="App_Data\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

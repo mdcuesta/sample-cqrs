@@ -13,7 +13,7 @@ namespace Sampler.CQRS.Web
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                   .UseStartup<Startup>()
-                   .UseStructureMap();
+                   .UseStartup<Startup>();
+                   //.UseStructureMap();
     }
 }

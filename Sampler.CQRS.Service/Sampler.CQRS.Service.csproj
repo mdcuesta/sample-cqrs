@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="dapper" Version="1.50.5" />
+    <PackageReference Include="microsoft.extensions.configuration" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sampler.CQRS.Core\Sampler.CQRS.Core.csproj" />
+    <ProjectReference Include="..\Sampler.CQRS.Data\Sampler.CQRS.Data.csproj" />
+    <ProjectReference Include="..\Sampler.CQRS.Source\Sampler.CQRS.Source.csproj" />
+  </ItemGroup>
+
+</Project>

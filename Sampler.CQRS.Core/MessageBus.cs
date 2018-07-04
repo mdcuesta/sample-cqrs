@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Sampler.CQRS.Core
@@ -15,11 +16,12 @@ namespace Sampler.CQRS.Core
 
         public void Publish<TMessage>(TMessage message) where TMessage : IMessage
         {
-            IEnumerable<IMessageHandler<TMessage>> handlers =
+            IEnumerable<IMessageHandler<TMessage>> messageHandlers =
                 this.serviceProvider.GetServices<IMessageHandler<TMessage>>();
-            foreach (var eventHandler in handlers)
+
+            foreach (var messageHandler in messageHandlers)
             {
-                eventHandler.Handle(message);
+                ThreadPool.QueueUserWorkItem(x => messageHandler.Handle(message));
             }
         }
     }

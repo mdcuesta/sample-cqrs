@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Transactions;
 using Sampler.CQRS.Core;
 
 namespace Sampler.CQRS.Data
@@ -6,31 +7,35 @@ namespace Sampler.CQRS.Data
     public abstract class SqlTransactionCommandHandler<TCommand> : ICommandHandler<TCommand>
         where TCommand : ICommand
     {
-        private readonly IUnitOfWork unitOfWork;
+        private readonly IConnectionManager connectionManager;
 
-        protected IDbConnection Connection => this.unitOfWork.Connection;
+        protected virtual IDbConnection Connection { get; private set; }
 
-        protected SqlTransactionCommandHandler(IUnitOfWork unitOfWork)
+        protected SqlTransactionCommandHandler(IConnectionManager connectionManager)
         {
-            this.unitOfWork = unitOfWork;
+            this.connectionManager = connectionManager;
         }
 
         public CommandResult Execute(TCommand command)
         {
+            TransactionScope transactionScope = null;
             try
             {
-                this.unitOfWork.Begin();
+                transactionScope = new TransactionScope();
+                Connection = this.connectionManager.Create();
                 CommandResult result = ExecuteCommand(command);
-                this.unitOfWork.Commit();
+                transactionScope.Complete();
                 return result;
             }
-            catch
+            finally
             {
-                this.unitOfWork.RollBack();
-                throw;
+                if (transactionScope != null)
+                {
+                    transactionScope.Dispose();
+                }
             }
         }
 
-        public abstract CommandResult ExecuteCommand(TCommand command);
+        protected abstract CommandResult ExecuteCommand(TCommand command);
     }
 }

@@ -19,38 +19,68 @@ namespace Sampler.CQRS.Web
 
         private IConfiguration Configuration { get; }
 
-        private IServiceCollection ServiceCollection { get; set; }
-
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddSingleton(Configuration);
 
-            ServiceCollection = services;
-        }
+            var container = new Container();
 
-        public void ConfigureContainer(Registry registry)
-        {
-            // Use StructureMap-specific APIs to register services in the registry.
-            registry.Scan(_ =>
+            container.Configure(config =>
             {
-                _.AssembliesAndExecutablesFromApplicationBaseDirectory();
-                _.AddAllTypesOf<IDependencyConfig>();
+                var registry = new Registry();
+                registry.Scan(_ =>
+                {
+                    _.AssembliesAndExecutablesFromApplicationBaseDirectory();
+
+                    // Default Convention
+                    _.WithDefaultConventions();
+
+                    // Register all Dependency Configurations
+                    _.AddAllTypesOf<IDependencyConfig>();
+
+                    // Register all Initializers
+                    _.AddAllTypesOf<IInitializer>();
+
+                    // Register all CommandHandlers
+                    _.AddAllTypesOf(typeof(ICommandHandler<>));
+
+                    // Register all QueryHandlers
+                    _.AddAllTypesOf(typeof(IQueryHandler<,>));
+
+                    // Register all MessageHandlers
+                    _.AddAllTypesOf(typeof(IMessageHandler<>));
+                });
+                config.AddRegistry(registry);
             });
 
+            // Load DependencyConfigurations and Execute
+            IEnumerable<IDependencyConfig> dependencyConfigs = container.GetAllInstances<IDependencyConfig>();
+
+            foreach (IDependencyConfig dependencyConfig in dependencyConfigs)
+            {
+                dependencyConfig.Configure(services);
+            }
+
+            container.Populate(services);
+
+            return container.GetInstance<IServiceProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            IEnumerable<IDependencyConfig> dependencyConfigs = app.ApplicationServices.GetServices<IDependencyConfig>();
+            // Load Initializers and Execute
+            IEnumerable<IInitializer> initializers = app.ApplicationServices.GetServices<IInitializer>();
 
-            foreach(IDependencyConfig dependencyConfig in dependencyConfigs)
+            foreach(IInitializer initializer in initializers)
             {
-                dependencyConfig.Configure(ServiceCollection);
+                initializer.Init();
             }
+
+            // .NET Core MVC Specifics
 
             if (env.IsDevelopment())
             {

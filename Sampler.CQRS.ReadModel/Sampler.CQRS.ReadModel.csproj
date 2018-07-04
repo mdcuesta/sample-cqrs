@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sampler.CQRS.Core\Sampler.CQRS.Core.csproj" />
+    <ProjectReference Include="..\Sampler.CQRS.Source\Sampler.CQRS.Source.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -14,5 +14,25 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Sampler.CQRS.Migrations.Test\obj\Debug\netcoreapp2.1\Sampler.CQRS.Migrations.Test.assets.cache" />
+    <None Remove="Scripts\001-CreateUsers.sql" />
+    <None Remove="Scripts\002-CreateDepartments.sql" />
+    <None Remove="Scripts\003-CreateEmployees.sql" />
+    <None Remove="Scripts\004-CreateDepartmentEmployees.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\001-CreateUsers.sql" />
+    <EmbeddedResource Include="Scripts\002-CreateDepartments.sql" />
+    <EmbeddedResource Include="Scripts\003-CreateEmployees.sql" />
+    <EmbeddedResource Include="Scripts\004-CreateDepartmentEmployees.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="dbup" Version="4.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.1.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Data.SqlServerCe">
+      <HintPath>..\assemblies\System.Data.SqlServerCe.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
   </ItemGroup>
 </Project>

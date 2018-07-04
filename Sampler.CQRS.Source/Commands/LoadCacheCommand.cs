@@ -2,8 +2,7 @@
 
 namespace Sampler.CQRS.Source.Commands
 {
-    public class MigrationCommand : ICommand
+    public class LoadCacheCommand : ICommand
     {
-        public bool Run { get; set; }
     }
 }

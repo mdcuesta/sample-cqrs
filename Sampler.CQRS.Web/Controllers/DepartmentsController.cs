@@ -25,12 +25,13 @@ namespace Sampler.CQRS.Web.Controllers
             return this.queryDispatcher.Dispatch<GetAllDepartmentsQuery, GetAllDepartmentsQueryResult>(query);
         }
 
-        [HttpPost]
-        public void Post([FromBody] string name)
+        [Route("executeCommand")]
+        [HttpGet]
+        public void Post()
         {
             var command = new CreateDepartmentCommand
             {
-                Name = name
+                Name = "someName",
             };
 
             this.commandDispatcher.Dispatch(command);
